@@ -40,6 +40,7 @@
     // UIView *imageSnapshot = [fromTransitionImage snapshotViewAfterScreenUpdates:NO];
     UIImageView *imageSnapshot = [[UIImageView alloc]initWithImage:fromTransitionImage.image];
     imageSnapshot.layer.cornerRadius = fromTransitionImage.layer.cornerRadius;
+    imageSnapshot.contentMode = UIViewContentModeScaleAspectFit;
     
     imageSnapshot.frame = [containerView convertRect:fromTransitionImage.frame fromView:fromTransitionImage.superview];
     fromTransitionImage.hidden = YES;
