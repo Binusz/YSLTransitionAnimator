@@ -40,8 +40,7 @@
     // UIView *imageSnapshot = [fromTransitionImage snapshotViewAfterScreenUpdates:NO];
     UIImageView *imageSnapshot = [[UIImageView alloc]initWithImage:fromTransitionImage.image];
     imageSnapshot.layer.cornerRadius = fromTransitionImage.layer.cornerRadius;
-    imageSnapshot.contentMode = UIViewContentModeScaleAspectFit;
-    
+
     imageSnapshot.frame = [containerView convertRect:fromTransitionImage.frame fromView:fromTransitionImage.superview];
     fromTransitionImage.hidden = YES;
     
@@ -50,6 +49,9 @@
     toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
     
     if (_isForward) {
+        // fix for border overlap and image distortion problem.
+        imageSnapshot.contentMode = fromTransitionImage.contentMode;
+        
         // push Animation
         toViewController.view.alpha = 0;
         [containerView addSubview:toViewController.view];
@@ -79,6 +81,10 @@
 
         }];
     } else {
+        // fix for border overlap and image distortion problem.
+        imageSnapshot.contentMode = toTransitionImage.contentMode;
+        imageSnapshot.clipsToBounds = YES;
+        
         // pop Animation
         toTransitionImage.hidden = YES;
         [containerView insertSubview:toViewController.view belowSubview:fromViewController.view];
